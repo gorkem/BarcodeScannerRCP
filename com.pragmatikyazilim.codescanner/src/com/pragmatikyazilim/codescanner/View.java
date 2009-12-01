@@ -14,13 +14,9 @@ import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.part.ViewPart;
 
 import com.pragmatikyazilim.codescanner.internal.BarcodeListener;
@@ -66,8 +62,10 @@ public class View extends ViewPart {
 		try {
 			camera.initializePlayer();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			MessageBox box = new MessageBox(parent.getShell(),SWT.ICON_ERROR | SWT.OK);
+			box.setText("Camera failure");
+			box.setMessage("Failed to initialize player with the following error: "+e.toString() );
+			box.open();
 		}
 		camera.initializeViewFinder(parent);
 		return camera;
